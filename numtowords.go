@@ -1,14 +1,19 @@
 package numtowords
 
-import "fmt"
+import (
+	"fmt"
+)
 
-//MaxNum is the largest number that can be converted to words
+// MaxNum is the largest number that can be converted to words
 const MaxNum = 999
+
+// MinNum is the smallest number that can be converted to words
+const MinNum = -999
 
 // Convert converts the specified number to words
 func Convert(number int) (string, error) {
-	if number > MaxNum || number < 0 {
-		return "", fmt.Errorf("Can only convert numbers between %v and %v", 0, MaxNum)
+	if number > MaxNum || number < MinNum {
+		return "", fmt.Errorf("Can only convert numbers between %v and %v", MinNum, MaxNum)
 	}
 	if number == 0 {
 		return "zero", nil
@@ -47,6 +52,11 @@ func Convert(number int) (string, error) {
 	}
 
 	result := ""
+
+	if number < 0 {
+		result += "minus "
+		number = (number) * (-1)
+	}
 
 	if number > 99 {
 		hundredindex := number / 100
